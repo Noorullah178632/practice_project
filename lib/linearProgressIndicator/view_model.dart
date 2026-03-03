@@ -36,4 +36,10 @@ class ViewModel extends ChangeNotifier {
       );
     }
   }
+
+  bool isLoading = false;
+  void setLoading() {
+    isLoading = !isLoading;
+    notifyListeners();
+  }
 }

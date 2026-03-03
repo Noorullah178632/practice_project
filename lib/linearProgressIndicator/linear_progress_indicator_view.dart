@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:practice/linearProgressIndicator/view_model.dart';
 import 'package:provider/provider.dart';
+import 'package:redacted/redacted.dart';
 
 class LinearProgressIndicatorView extends StatefulWidget {
   const LinearProgressIndicatorView({super.key});
@@ -12,8 +13,6 @@ class LinearProgressIndicatorView extends StatefulWidget {
 
 class _LinearProgressIndicatorViewState
     extends State<LinearProgressIndicatorView> {
-  PageController controller = PageController();
-  int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Consumer<ViewModel>(
@@ -65,17 +64,33 @@ class _LinearProgressIndicatorViewState
               ),
             ),
           ),
-          body: PageView(
-            controller: vm.controller,
-            onPageChanged: (value) {
-              vm.updateIndex(value);
+          body:
+              PageView(
+                controller: vm.controller,
+                onPageChanged: (value) {
+                  vm.updateIndex(value);
+                },
+                children: [
+                  firstWidget(vm),
+                  secondWidget(vm),
+                  thirdWidget(vm),
+                  fourWidget(vm),
+                ],
+              ).redacted(
+                context: context,
+                redact: vm.isLoading,
+                configuration: RedactedConfiguration(
+                  animationDuration: const Duration(
+                    milliseconds: 800,
+                  ), // Makes it shimmer
+                  redactedColor: Colors.grey[300]!,
+                ),
+              ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              vm.setLoading();
             },
-            children: [
-              firstWidget(vm),
-              secondWidget(vm),
-              thirdWidget(vm),
-              fourWidget(vm),
-            ],
+            child: Icon(Icons.refresh),
           ),
         );
       },
