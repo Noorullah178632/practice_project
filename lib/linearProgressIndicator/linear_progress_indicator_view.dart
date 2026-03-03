@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:practice/linearProgressIndicator/view_model.dart';
+import 'package:provider/provider.dart';
 
 class LinearProgressIndicatorView extends StatefulWidget {
   const LinearProgressIndicatorView({super.key});
@@ -14,32 +16,71 @@ class _LinearProgressIndicatorViewState
   int currentIndex = 0;
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        actions: [
-          Text("skip", style: TextStyle(color: Colors.blue)),
-          SizedBox(width: 5),
-        ],
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(0.4),
-          child: LinearProgressIndicator(
-            value: 3,
-            backgroundColor: Colors.blue,
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+    return Consumer<ViewModel>(
+      builder: (context, vm, child) {
+        return Scaffold(
+          appBar: AppBar(
+            leading: vm.currentIndex > 0
+                ? IconButton(
+                    onPressed: () {
+                      vm.backPage();
+                    },
+                    icon: Icon(Icons.arrow_back),
+                  )
+                : null,
+            actions: [
+              GestureDetector(
+                onTap: () {
+                  vm.skipPages();
+                },
+                child: Text("skip", style: TextStyle(color: Colors.blue)),
+              ),
+              SizedBox(width: 5),
+            ],
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(10),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: List.generate(vm.totalPages, (index) {
+                    return Expanded(
+                      child: Container(
+                        height: 4,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(2),
+                          // Fill color if index <= current, otherwise background color
+                          color: index <= vm.currentIndex
+                              ? Colors.blue
+                              : Colors.grey[300],
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
           ),
-        ),
-      ),
-      body: PageView(
-        controller: controller,
-        onPageChanged: (value) {
-          currentIndex = value;
-        },
-        children: [firstWidget(), secondWidget(), thirdWidget(), fourWidget()],
-      ),
+          body: PageView(
+            controller: vm.controller,
+            onPageChanged: (value) {
+              vm.updateIndex(value);
+            },
+            children: [
+              firstWidget(vm),
+              secondWidget(vm),
+              thirdWidget(vm),
+              fourWidget(vm),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  Widget firstWidget() {
+  Widget firstWidget(ViewModel vm) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -48,12 +89,17 @@ class _LinearProgressIndicatorViewState
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
         SizedBox(height: 20),
-        ElevatedButton(onPressed: () {}, child: Text("Continue")),
+        ElevatedButton(
+          onPressed: () {
+            vm.changePage();
+          },
+          child: Text("Continue"),
+        ),
       ],
     );
   }
 
-  Widget secondWidget() {
+  Widget secondWidget(ViewModel vm) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -61,12 +107,18 @@ class _LinearProgressIndicatorViewState
           "Page 2",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("Continue")),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            vm.changePage();
+          },
+          child: Text("Continue"),
+        ),
       ],
     );
   }
 
-  Widget thirdWidget() {
+  Widget thirdWidget(ViewModel vm) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -74,12 +126,18 @@ class _LinearProgressIndicatorViewState
           "Page 3",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("Continue")),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            vm.changePage();
+          },
+          child: Text("Continue"),
+        ),
       ],
     );
   }
 
-  Widget fourWidget() {
+  Widget fourWidget(ViewModel vm) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -87,7 +145,13 @@ class _LinearProgressIndicatorViewState
           "Page 4",
           style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
         ),
-        ElevatedButton(onPressed: () {}, child: Text("Continue")),
+        SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            vm.changePage();
+          },
+          child: Text("Continue"),
+        ),
       ],
     );
   }

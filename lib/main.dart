@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:practice/linearProgressIndicator/linear_progress_indicator_view.dart';
+import 'package:practice/linearProgressIndicator/view_model.dart';
+import 'package:provider/provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => ViewModel())],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
