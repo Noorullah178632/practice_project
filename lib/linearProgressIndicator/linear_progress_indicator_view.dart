@@ -28,6 +28,8 @@ class _LinearProgressIndicatorViewState
                     icon: Icon(Icons.arrow_back),
                   )
                 : null,
+            title: Text("Step ${vm.currentIndex} of ${vm.totalPages}"),
+            centerTitle: vm.currentIndex == 0 ? false : true,
             actions: [
               GestureDetector(
                 onTap: () {
