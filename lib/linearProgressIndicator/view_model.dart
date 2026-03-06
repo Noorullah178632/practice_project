@@ -42,4 +42,12 @@ class ViewModel extends ChangeNotifier {
     isLoading = !isLoading;
     notifyListeners();
   }
+
+  //get the index of the containe first
+  int? _selectedIndex;
+  int? get selectedIndex => _selectedIndex;
+  void selectedContainer(int value) {
+    _selectedIndex = value;
+    notifyListeners();
+  }
 }
