@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:practice/container_chosing/chose_container_view.dart';
+import 'package:practice/container_chosing/new_view.dart';
 import 'package:practice/linearProgressIndicator/view_model.dart';
 import 'package:provider/provider.dart';
 
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(colorScheme: .fromSeed(seedColor: Colors.deepPurple)),
-      home: ChoseContainerView(),
+      home: NewView(),
     );
   }
 }
