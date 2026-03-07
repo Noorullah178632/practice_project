@@ -88,6 +88,22 @@ class _ChoseContainerViewState extends State<ChoseContainerView> {
                     child: Text("data 4"),
                   ),
                 ),
+                GestureDetector(
+                  onTap: () {
+                    vm.selectedContainer(4);
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(10),
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      border: vm.selectedIndex == 4
+                          ? Border.all(width: 1.5, color: Colors.black)
+                          : null,
+                    ),
+                    child: Text("data 4"),
+                  ),
+                ),
               ],
             ),
           );
