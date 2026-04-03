@@ -35,6 +35,15 @@ class _NewViewState extends State<NewView> {
             color: Colors.black,
             child: Text("this", style: TextStyle(color: Colors.white)),
           ),
+
+          Container(
+            padding: EdgeInsets.all(10),
+            height: 100,
+            width: 100,
+            color: Colors.black,
+            child: Text("new Test", style: TextStyle(color: Colors.white)),
+          ),
+
           Container(
             padding: EdgeInsets.all(10),
             height: 100,
